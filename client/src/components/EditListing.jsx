@@ -30,7 +30,7 @@ const EditListing = () => {
         const res = await axios.get(`${BASE_URL}/api/listings/${id}`, {
           withCredentials: true,
         });
-        
+
         const listing = {
           title: res.data.title || "",
           description: res.data.description || "",
@@ -68,9 +68,14 @@ const EditListing = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/listings/updatelisting/${id}`,
+        `${BASE_URL}/api/listings/updatelisting/${id}`,
         formData,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`  
+          }
+        }
       );
       showMessage("success", "Listing updated!");
       setTimeout(() => navigate("/account/view"), 1500);
