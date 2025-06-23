@@ -20,3 +20,4 @@ const searchAPI = axios.create({
 });
 
 export { API, listingAPI, searchAPI };
+

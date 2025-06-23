@@ -24,21 +24,25 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
+      const token = localStorage.getItem("token");
       const res = await axios.get(`${BASE_URL}/api/user/me`, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       setUser(res.data.user);
       connectSocket(res.data.user._id);
-    } catch(err) {
-
+    } catch (err) {
       setUser(null);
-       console.error("Fetch user failed:", err);
+      console.error("Fetch user failed:", err);
     } finally {
       setLoading(false);
     }
   };
-  
+
+
 
   useEffect(() => {
     fetchUser();
@@ -75,7 +79,7 @@ export const AuthProvider = ({ children }) => {
         { withCredentials: true }
       );
       if (res.data.token) localStorage.setItem("token", res.data.token);
-      
+
       await fetchUser();
     } catch (err) {
       throw new Error(err.response?.data?.message || "Signup failed");
