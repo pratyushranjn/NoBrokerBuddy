@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// const mongo_URL = "mongodb://127.0.0.1:27017/nobrokerbuddy"
+//const mongo_URL = "mongodb://127.0.0.1:27017/nobrokerbuddy"
 
 const mongo_URL = process.env.MONGO_URI;
 

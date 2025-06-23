@@ -91,6 +91,7 @@ const AccountView = () => {
     }
   };
 
+
   const updateUser = async (e) => {
     e.preventDefault();
 
@@ -100,12 +101,20 @@ const AccountView = () => {
     }
 
     try {
+      const token = localStorage.getItem("token");
+
       await axios.post(`${BASE_URL}/api/user/update-profile`, userInfo, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       setUser((prev) => ({ ...prev, ...userInfo }));
+      
+      setUserInfo(userInfo);
       setInitialUserInfo(userInfo);
+
       showMessage("success", "Profile updated!");
     } catch (error) {
       console.error("Update failed:", error);
@@ -116,6 +125,7 @@ const AccountView = () => {
       }
     }
   };
+
 
   const updatePassword = async (e) => {
     e.preventDefault();
@@ -131,18 +141,22 @@ const AccountView = () => {
       return;
     }
 
+
     try {
-      await axios.post(
-        `${BASE_URL}/api/user/update-password`,
-        {
-          currentPassword: current,
-          newPassword: newPass,
+      const token = localStorage.getItem("token");
+      await axios.post(`${BASE_URL}/api/user/update-password`, {
+        currentPassword: current,
+        newPassword: newPass,
+      }, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        { withCredentials: true }
-      );
+      });
+
       showMessage("success", "Password updated successfully!");
       setPasswords({ current: "", new: "", confirm: "" });
-      setShowPasswordForm(false); // auto-hide form
+      setShowPasswordForm(false);
     } catch (error) {
       console.error("Password update failed:", error);
       showMessage(
@@ -152,6 +166,7 @@ const AccountView = () => {
     }
   };
 
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 mt-11">
       <h2 className="text-3xl font-bold mb-4 text-gray-800">My Account</h2>
@@ -159,10 +174,10 @@ const AccountView = () => {
       {statusMessage.text && (
         <div
           className={`mb-5 p-3 rounded-lg text-sm font-medium ${statusMessage.type === "success"
-              ? "bg-green-100 text-green-700"
-              : statusMessage.type === "error"
-                ? "bg-red-100 text-red-700"
-                : "bg-blue-100 text-blue-700"
+            ? "bg-green-100 text-green-700"
+            : statusMessage.type === "error"
+              ? "bg-red-100 text-red-700"
+              : "bg-blue-100 text-blue-700"
             }`}
         >
           {statusMessage.text}

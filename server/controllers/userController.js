@@ -193,4 +193,3 @@ module.exports = {
   getUserById,
   updateUserPassword
 };
-

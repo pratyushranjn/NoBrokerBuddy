@@ -56,7 +56,7 @@ const Navbar = () => {
 
   }, [searchQuery, navigate]);
 
-  const handleShareClick = () => {  
+  const handleShareClick = () => {
     if (!user) {
       if (location.pathname !== "/login") {
         navigate('/login', {
@@ -67,6 +67,9 @@ const Navbar = () => {
     }
     navigate('/newlisting');
   };
+
+
+  // const isNewListingPage = location.pathname === '/newlisting';
 
 
   const handleMessageClick = () => {
@@ -299,12 +302,21 @@ const Navbar = () => {
                 </NavLink>
               ))}
 
-              <button
-                onClick={handleShareClick}
-                className="ml-2 px-4 py-2 rounded-full text-sm font-semibold transition duration-300 bg-indigo-50 text-indigo-700 border border-indigo-300 hover:bg-indigo-600 hover:text-white"
+              <NavLink
+                to="/newlisting"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleShareClick();
+                }}
+                className={({ isActive }) =>
+                  `ml-2 px-4 py-2 rounded-full text-sm font-semibold transition duration-300 border ${isActive
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-indigo-50 text-indigo-700 border-indigo-300 hover:bg-indigo-600 hover:text-white'
+                  }`
+                }
               >
                 Share Your Spot
-              </button>
+              </NavLink>
 
               {user && (
                 <>
@@ -336,19 +348,6 @@ const Navbar = () => {
                   {item.label}
                 </NavLink>
               ))}
-
-              <NavLink
-                to="/newlisting"
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium ${isActive
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
-                  }`
-                }
-              >
-                Share Your Spot
-              </NavLink>
 
               <NavLink
                 to="/"
