@@ -31,13 +31,28 @@ const ListingDetails = () => {
     fetchListing();
   }, [id]);
 
+
   if (loading) {
-    return <div className="text-center mt-10 text-lg text-gray-600">Loading listing details...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-4"></div>
+          <div className="text-lg text-gray-600 opacity-0 animate-fadeIn">Loading listing details...</div>
+        </div>
+      </div>
+    );
   }
 
   if (!listing) {
-    return <div className="text-center mt-10 text-red-600">Listing not found.</div>;
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="p-6 bg-white rounded-lg shadow-md text-center text-red-600">
+          <p className="text-xl font-semibold">Listing not found</p>
+        </div>
+      </div>
+    );
   }
+
 
   const {
     title,
@@ -96,7 +111,7 @@ const ListingDetails = () => {
             </svg>
             <span className="font-medium text-gray-800 mr-1">Listed by:</span>
             <span className="text-gray-600">
-              
+
               {typeof postedBy === 'object' && postedBy?.name ? postedBy.name : "Your Buddy"}
 
             </span>
@@ -124,7 +139,7 @@ const ListingDetails = () => {
             Connect {postedBy.name?.split(' ')[0] || 'owner'}
           </Link>
         )}
-        
+
       </div>
     </div>
   );

@@ -2,15 +2,21 @@ import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const listingAPI = axios.create({
-  baseURL: `${BASE_URL}/api/listings`,
+// Global axios instance for all user-authenticated requests
+const API = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true, 
 });
 
-export const API = axios.create({
-  baseURL: `${BASE_URL}/api/user`,
+
+const listingAPI = axios.create({
+  baseURL: `${BASE_URL}/api/listings`,
   withCredentials: true,
 });
 
-export const searchAPI = axios.create({
+const searchAPI = axios.create({
   baseURL: `${BASE_URL}/api/listings`,
+  withCredentials: true,
 });
+
+export { API, listingAPI, searchAPI };

@@ -27,3 +27,19 @@
 .animate-toast-in {
   animation: toastIn 0.4s ease-out;
 }
+
+
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}

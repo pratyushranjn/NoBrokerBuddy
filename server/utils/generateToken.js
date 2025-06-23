@@ -41,7 +41,7 @@ const protect = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.error("Auth error:", err.message);
+    // console.error("Auth error:", err.message);
     throw new ExpressError(StatusCodes.UNAUTHORIZED, "Token is invalid or expired");
   }
 };

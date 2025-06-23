@@ -8,7 +8,7 @@ const onlineUsers = new Map(); // userId => socket.id
 module.exports = function setupSocket(server) {
   const io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL || 'http://localhost:5173',
+      origin: ['http://localhost:5173', 'https://no-broker-buddy.vercel.app'],
       methods: ["GET", "POST"],
       credentials: true,
     },
@@ -149,7 +149,7 @@ module.exports = function setupSocket(server) {
     // On disconnect
     socket.on("disconnect", () => {
       onlineUsers.delete(userId);
-     // console.log(`${user.name} disconnected`);
+      // console.log(`${user.name} disconnected`);
       io.emit("online-users", Array.from(onlineUsers.keys()));
       io.emit("user-offline", { userId });
     });

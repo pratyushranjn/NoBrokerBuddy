@@ -27,14 +27,18 @@ export const AuthProvider = ({ children }) => {
       const res = await axios.get(`${BASE_URL}/api/user/me`, {
         withCredentials: true,
       });
+
       setUser(res.data.user);
       connectSocket(res.data.user._id);
-    } catch {
+    } catch(err) {
+
       setUser(null);
+       console.error("Fetch user failed:", err);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchUser();
