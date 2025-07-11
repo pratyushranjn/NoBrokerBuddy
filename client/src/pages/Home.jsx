@@ -3,9 +3,25 @@ const ListingCard = React.lazy(() => import('../components/ListingCard'));
 import { Commet } from 'react-loading-indicators';
 import { listingAPI } from '../utils/axiosConfig';
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+
 const Home = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      AOS.refresh();
+    }
+  }, [loading]);
+
 
   useEffect(() => {
     let isMounted = true;
@@ -49,7 +65,9 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
 
           {listings.map((listing) => (
-            <ListingCard key={listing._id} id={listing._id} {...listing} /> // spread
+            <div data-aos="fade-up" key={listing._id}>
+              <ListingCard id={listing._id} {...listing} />
+            </div>
           ))}
 
         </div>
@@ -59,3 +77,4 @@ const Home = () => {
 };
 
 export default Home;
+

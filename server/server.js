@@ -15,10 +15,21 @@ const server = http.createServer(app);
 
 connectDB();
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://no-broker-buddy.vercel.app'
+];
+
 // Middlewares
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://no-broker-buddy.vercel.app'],
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 
 

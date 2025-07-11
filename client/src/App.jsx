@@ -43,7 +43,6 @@ function App() {
           <Footer />
         </BrowserRouter>
       </NotificationProvider>
-
     </AuthProvider>
   );
 }
